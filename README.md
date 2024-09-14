@@ -1,4 +1,6 @@
 # 1. Introduction
+# Title: PineScript-Backtesting-Tools
+Overlay: true (The indicator will be plotted directly on the main price chart of TradingView)
 Welcome to the PineScript-Backtesting-Toolkit,
 a comprehensive collection of tools and scripts designed to facilitate the development, testing, and optimization of trading strategies using Pine Script on TradingView.
 This repository provides a range of utilities to help traders and developers create and evaluate their Pine Script strategies effectively.
@@ -12,8 +14,6 @@ Provides tools to backtest strategies based on moving averages and other indicat
 Features scripts to highlight candles and background colors based on specific conditions, such as when the price is below a moving average, to improve visual analysis.
 # Customization Options: 
 Allows users to adjust input parameters, smoothing methods, and lengths to tailor strategies to different market conditions and trading styles.
-# Title: PineScript-Backtesting-Tools
-Overlay: true (The indicator will be plotted directly on the main price chart of TradingView)
 # 2. Input Parameters
 Length (len):
 Description: Defines the period for the Exponential Moving Average (EMA) calculation.
