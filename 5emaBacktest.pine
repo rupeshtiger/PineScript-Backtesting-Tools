@@ -1,0 +1,40 @@
+//@version=5
+
+indicator(title="Moving Average Exponential with Candle Highlighting", shorttitle="EMA Highlight", overlay=true)
+
+// Input parameters
+len = input.int(5, minval=1, title="Length")  // EMA Length for smoothing line (9 EMA)
+src = input(close, title="Source")            // Source for EMA
+offset = input.int(title="Offset", defval=0, minval=-500, maxval=500, display = display.data_window)  // Offset for EMA
+
+// Calculate the 5-period EMA (used for smoothing)
+out = ta.ema(src, len)
+
+// Plot the 5-period EMA
+plot(out, title="5 EMA", color=color.blue, offset=offset)
+
+// Multi-method moving average
+ma(source, length, type) =>
+    switch type
+        "SMA" => ta.sma(source, length)
+        "EMA" => ta.ema(source, length)
+        "SMMA (RMA)" => ta.rma(source, length)
+        "WMA" => ta.wma(source, length)
+        "VWMA" => ta.vwma(source, length)
+
+// Input for smoothing method and length
+typeMA = input.string(title = "Method", defval = "SMA", options=["SMA", "EMA", "SMMA (RMA)", "WMA", "VWMA"], group="Smoothing", display = display.data_window)
+smoothingLength = input.int(title = "Length", defval = 5, minval = 1, maxval = 100, group="Smoothing", display = display.data_window)
+
+// Smoothing line calculation
+smoothingLine = ma(out, smoothingLength, typeMA)
+plot(smoothingLine, title="Smoothing Line", color=#f37f20, offset=offset, display=display.none)
+
+// 5-period EMA
+ema5 = ta.ema(src, 5)
+
+// Highlighting condition: Candle's high and low must be strictly below the 5 EMA
+highlightCondition = high < ema5 and low < ema5
+
+// Highlight the candles based on the condition
+bgcolor(highlightCondition ? color.new(color.red, 80) : na)
